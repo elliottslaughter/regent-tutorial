@@ -13,11 +13,21 @@ squeue -u $(whoami) # wait until it shows the job has completed
 less slurm-*.out
 ```
 
-If you want to use Emacs with Regent syntax support:
+## Editor Support for Regent Syntax
+
+Emacs:
 
 ```
 mv -f ~/.emacs ~/.emacs.backup
 ln -s /home/groups/aaiken/eslaught/econf/quickstart.el ~/.emacs
+```
+
+Vim:
+
+```
+mkdir -p ~/.vim/syntax
+wget -O ~/.vim/syntax/regent.vim https://raw.githubusercontent.com/StanfordLegion/regent.vim/master/regent.vim
+echo "au BufNewFile,BufRead *.rg set filetype=regent" >> ~/.vimrc
 ```
 
 ## Links
