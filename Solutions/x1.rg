@@ -15,7 +15,6 @@
 import "regent"
 
 local c = regentlib.c
-local std = terralib.includec("stdlib.h")
 
 -- To improve parallelism of example6.rg, subtasks now carry out many iterations of the
 -- simulation independently.  The important aspect here is that the results of one subtask
@@ -25,8 +24,8 @@ local std = terralib.includec("stdlib.h")
 task hits(iterations : int64)
   var total: int64 = 0
   for i = 1, iterations do
-    var x : double = std.drand48()
-    var y : double = std.drand48()
+    var x : double = c.drand48()
+    var y : double = c.drand48()
     if (x * x) + (y * y) <= 1.0 then
      	total = total + 1
     end

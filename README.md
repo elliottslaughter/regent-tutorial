@@ -7,7 +7,7 @@ Basic sanity check that everything works:
 ```
 ssh SUNetID@login.sherlock.stanford.edu
 git clone https://github.com/elliottslaughter/regent-tutorial.git tutorial
-cd tutorial/Tasks
+cd tutorial/Overview
 sbatch r1.sh
 squeue -u $(whoami) # wait until it shows the job has completed
 less slurm-*.out

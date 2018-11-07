@@ -15,7 +15,6 @@
 import "regent"
 
 local c = regentlib.c
-local std = terralib.includec("stdlib.h") -- The C standard library.
 
 -- A standard Monte Carlo simulation to estimate the area of a circle of radius 1.
 --
@@ -34,8 +33,8 @@ local std = terralib.includec("stdlib.h") -- The C standard library.
 -- TODO  Modify the code to make 2500 trials at a time in each of 4 parallel tasks.
 --
 task hit()
-  var x : double = std.drand48()
-  var y : double = std.drand48()
+  var x : double = c.drand48()
+  var y : double = c.drand48()
   if (x * x) + (y * y) <= 1.0 then
     return 1
   else
