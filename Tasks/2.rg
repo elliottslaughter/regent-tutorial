@@ -1,4 +1,4 @@
--- Copyright 2016 Stanford University
+-- Copyright 2018 Stanford University
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- you may not use this file except in compliance with the License.
@@ -15,38 +15,38 @@
 import "regent"
 local c = regentlib.c
 
-task summer(lim: int64)
-     var sum: int64 = 0
-     for i = 1,lim do
-         sum += i
-     end
-     c.printf("Summer is done!\n")
-     return sum
+task summer(lim : int64)
+  var sum : int64 = 0
+  for i = 1, lim do
+    sum += i
+  end
+  c.printf("Summer is done!\n")
+  return sum
 end
 
 -- Just making the point that subtasks can also launch subtasks ...
-task subtracter(input: int64)
-     c.printf("Subtracter is done!\n")
-     return input - 3
+task subtracter(input : int64)
+  c.printf("Subtracter is done!\n")
+  return input - 3
 end
 
-task tester(sum: int64)
-     if sum >= 40 then
-          sum = subtracter(sum)
-     elseif sum <= 30 then
-     	  sum = 0
-     else
+task tester(sum : int64)
+  if sum >= 40 then
+    sum = subtracter(sum)
+  elseif sum <= 30 then
+    sum = 0
+  else
 	  sum += 3
-     end
-     c.printf("Tester is done!\n")
-     return sum
+  end
+  c.printf("Tester is done!\n")
+  return sum
 end
 
 -- A main task with two subtasks
 task main()
-     var sum: int64 = summer(10)
-     sum = tester(sum)
-     c.printf("The answer is: %d\n",sum)
+  var sum = summer(10)
+  sum = tester(sum)
+  c.printf("The answer is: %ld\n",sum)
 end
 
 regentlib.start(main)

@@ -9,4 +9,4 @@
 
 source /home/groups/aaiken/eslaught/tutorial/env.sh
 
-srun regent x2.rg -logfile spy_%.log -hl:spy 1 -ll:cpu 4
+srun regent x2.rg -logfile spy_%.log -lg:spy 1 -ll:cpu 4

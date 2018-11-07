@@ -1,4 +1,4 @@
--- Copyright 2016 Stanford University
+-- Copyright 2018 Stanford University
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- you may not use this file except in compliance with the License.
@@ -15,64 +15,63 @@
 import "regent"
 
 local c = regentlib.c
-local std = terralib.includec("stdlib.h")
 
 fspace BitField
 {
-   bit : bool;
+  bit : bool;
 }
 
-task clear(bit_region: region(ispace(int1d), BitField))
+task clear(bit_region : region(ispace(int1d), BitField))
 where
-   writes(bit_region.bit)
+  writes(bit_region.bit)
 do
-   for b in bit_region do
-      b.bit = false
-   end
+  for b in bit_region do
+    b.bit = false
+  end
 end
 
-task printer(bit_region: region(ispace(int1d), BitField))
+task printer(bit_region : region(ispace(int1d), BitField))
 where
-   reads(bit_region.bit)
+  reads(bit_region.bit)
 do
-   c.printf("The bits are: ")
-   var limits = bit_region.bounds
-   for i = [int](limits.lo), [int](limits.hi) + 1 do
-     if bit_region[i].bit then
-        c.printf("1 ")
-     else
-        c.printf("0 ")
-     end
-   end
-   c.printf("\n")
+  c.printf("The bits are: ")
+  var limits = bit_region.bounds
+  for i = [int](limits.lo), [int](limits.hi) + 1 do
+    if bit_region[i].bit then
+      c.printf("1 ")
+    else
+      c.printf("0 ")
+    end
+  end
+  c.printf("\n")
 end
 
-task blink(bit_region: region(ispace(int1d), BitField))
+task blink(bit_region : region(ispace(int1d), BitField))
 where
-   reads writes(bit_region.bit)
+  reads writes(bit_region.bit)
 do
-   for b in bit_region do
-     b.bit = not b.bit
-   end
+  for b in bit_region do
+    b.bit = not b.bit
+  end
 end
 
 task main()
-     var size = 60
-     var num_pieces = 6
-     var bit_region = region(ispace(int1d,size), BitField)
+  var size = 60
+  var num_pieces = 6
+  var bit_region = region(ispace(int1d, size), BitField)
 
-     var bit_region_partition = partition(equal, bit_region, ispace(int1d, num_pieces))
+  var bit_region_partition = partition(equal, bit_region, ispace(int1d, num_pieces))
 
-     clear(bit_region)
-     printer(bit_region)
+  clear(bit_region)
+  printer(bit_region)
 
-     -- Illustration of a "time step" loop with a nested data parallel call over each subregion.
-     for i = 0,3 do
-       for c in bit_region_partition.colors do
-          blink(bit_region_partition[c])
-       end       
-     end
-     printer(bit_region)
+  -- Illustration of a "time step" loop with a nested data parallel call over each subregion.
+  for i = 0, 3 do
+    for c in bit_region_partition.colors do
+      blink(bit_region_partition[c])
+    end
+  end
+  printer(bit_region)
 end
 
 regentlib.start(main)

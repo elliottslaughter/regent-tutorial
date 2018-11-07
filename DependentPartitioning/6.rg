@@ -1,4 +1,4 @@
--- Copyright 2016 Stanford University
+-- Copyright 2018 Stanford University
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- you may not use this file except in compliance with the License.
@@ -16,67 +16,59 @@ import "regent"
 
 local c = regentlib.c
 
-fspace Node {
- id: int64
+fspace Node
+{
+  id : int64;
 }
 
-fspace Edge(r: region(Node)) {
-    source_node : ptr(Node, r),
-    dest_node: ptr(Node, r)
+fspace Edge(r : region(ispace(int1d), Node))
+{
+  source_node : int1d(Node, r);
+  dest_node   : int1d(Node, r);
 }
 
 task main()
-   var Num_Parts = 4
-   var Num_Elements = 20
+  var Num_Parts = 4
+  var Num_Elements = 20
 
-   var nodes = region(ispace(ptr, Num_Elements), Node)
-   var edges = region(ispace(ptr, Num_Elements), Edge(nodes))
+  var nodes = region(ispace(int1d, Num_Elements), Node)
+  var edges = region(ispace(int1d, Num_Elements - 1), Edge(nodes))
 
-   for i = 0, Num_Elements do
-        var node = new(ptr(Node, nodes))
-	node.id = i
-   end
+  for i = 0, Num_Elements do
+    nodes[i].id = i
+  end
 
-   for n in nodes do
-      for m in nodes do
-         if m.id == n.id + 1 then
-            var edge = new(ptr(Edge(nodes), edges))
-            edge.source_node = n
-            edge.dest_node = m
-         end
-      end
-   end
+  for j = 0, Num_Elements - 1 do
+    edges[j].source_node = dynamic_cast(int1d(Node, nodes), [int1d](j))
+    edges[j].dest_node   = dynamic_cast(int1d(Node, nodes), [int1d](j + 1))
+  end
 
-   var colors = ispace(int1d, Num_Parts)
-   var edge_partition = partition(equal, edges, colors)
+  var colors = ispace(int1d, Num_Parts)
+  var edge_partition = partition(equal, edges, colors)
 
-   for color in edge_partition.colors do
-     c.printf("Edge subregion %d: ", color)
-     for e in edge_partition[color] do
-        c.printf("(%d,%d) ", e.source_node.id, e.dest_node.id)
-     end
-     c.printf("\n")
-   end
+  for color in edge_partition.colors do
+    c.printf("Edge subregion %ld: ", color)
+    for e in edge_partition[color] do
+      c.printf("(%2ld, %2ld) ", nodes[e.source_node].id, e.dest_node.id)
+    end
+    c.printf("\n")
+  end
 
-   var node_partition_upper = image(nodes, edge_partition, edges.dest_node)
-   var node_partition_lower = image(nodes, edge_partition, edges.source_node)
-   --
-   -- In this example we create a subregion of nodes consisting of those nodes
-   -- that are both source and destination nodes in the corresponding edges subregion.
-   --
-   var private_nodes_partition = node_partition_upper & node_partition_lower 
+  var node_partition1 = image(nodes, edge_partition, edges.dest_node)
+  var node_partition2 = image(nodes, edge_partition, edges.source_node)
+  --
+  -- In this example we create a subregion of nodes consisting of those nodes
+  -- that are both source and destination nodes in the corresponding edges subregion.
+  --
+  var node_partition = node_partition1 & node_partition2
 
-   for color in private_nodes_partition.colors do
-     c.printf("Node subregion %d: ", color)
-     for n in private_nodes_partition[color] do
-        c.printf("%d ", n.id)
-     end
-     c.printf("\n")
-   end
-
-
-
-
+  for color in node_partition.colors do
+    c.printf("Node subregion %ld: ", color)
+    for n in node_partition[color] do
+       c.printf("%2ld ", n.id)
+    end
+    c.printf("\n")
+  end
 end
-  
+
 regentlib.start(main)

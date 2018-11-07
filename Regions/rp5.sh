@@ -9,4 +9,4 @@
 
 source /home/groups/aaiken/eslaught/tutorial/env.sh
 
-srun regent 2.rg -ll:cpu 1
+srun regent 5.rg -hl:prof_logfile prof_%.gz -lg:prof 1 -ll:cpu 4

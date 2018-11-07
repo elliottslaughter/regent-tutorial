@@ -19,12 +19,13 @@ local c = regentlib.c
 fspace Node
 {
   id : int64;
+  color: int1d;
 }
 
-fspace Edge(r : region(ispace(int1d), Node))
+fspace Edge
 {
-  source_node : int1d(Node, r);
-  dest_node   : int1d(Node, r);
+  source_node : int1d;
+  dest_node   : int1d;
 }
 
 task main()
@@ -32,40 +33,32 @@ task main()
   var Num_Elements = 20
 
   var nodes = region(ispace(int1d, Num_Elements), Node)
-  var edges = region(ispace(int1d, Num_Elements - 1), Edge(nodes))
+  var edges = region(ispace(int1d, Num_Elements - 1), Edge)
 
+  --
+  -- The Nodes field space now includes a coloring field.  The following
+  -- loop assigns colors in round-robin fashion.
+  --
   for i = 0, Num_Elements do
     nodes[i].id = i
+	  nodes[i].color = i % Num_Parts
   end
 
   for j = 0, Num_Elements - 1 do
-    edges[j].source_node = dynamic_cast(int1d(Node, nodes), [int1d](j))
-    edges[j].dest_node   = dynamic_cast(int1d(Node, nodes), [int1d](j + 1))
+    edges[j].source_node = [int1d](j)
+    edges[j].dest_node   = [int1d](j + 1)
   end
 
+  --
+  -- Partition the nodes using the coloring field.
+  --
   var colors = ispace(int1d, Num_Parts)
-  var edge_partition = partition(equal, edges, colors)
-
-  for color in edge_partition.colors do
-    c.printf("Edge subregion %ld: ", color)
-    for e in edge_partition[color] do
-      c.printf("(%2ld, %2ld) ", nodes[e.source_node].id, e.dest_node.id)
-    end
-    c.printf("\n")
-  end
-
-  var node_partition1 = image(nodes, edge_partition, edges.dest_node)
-  var node_partition2 = image(nodes, edge_partition, edges.source_node)
-  --
-  --  Keep those source nodes of edges that
-  --  are not also destination nodes.
-  --
-  var node_partition = node_partition2 - node_partition1
+  var node_partition = partition(nodes.color, colors)
 
   for color in node_partition.colors do
     c.printf("Node subregion %ld: ", color)
     for n in node_partition[color] do
-       c.printf("%2ld ", n.id)
+      c.printf("%2ld ", n.id)
     end
     c.printf("\n")
   end

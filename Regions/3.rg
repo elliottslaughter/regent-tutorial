@@ -46,6 +46,9 @@ do
   c.printf("\n")
 end
 
+--
+-- The blink task both reads and writes the region.
+--
 task blink(bit_region : region(ispace(int1d), BitField))
 where
   reads writes(bit_region.bit)
@@ -56,24 +59,11 @@ do
 end
 
 task main()
-  var size = 60
-  var num_pieces = 6
+  var size = 10
   var bit_region = region(ispace(int1d, size), BitField)
 
--- To enable parallel computation on regions, Regent has mechanisms for partitioning regions into
--- subregions.  The following call partition's its region argument into num_pieces subregions. Note
--- the result of the call is a partition, which can be thought of as an array of the subregions.
-
-  var bit_region_partition = partition(equal, bit_region, ispace(int1d, num_pieces))
-
   clear(bit_region)
-  printer(bit_region)
-
-  -- Launch a subtask on each subregion.  Partitions know their set of subregions, referred to as
-  -- the set of "colors".
-  for c in bit_region_partition.colors do
-     blink(bit_region_partition[c])
-  end
+  blink(bit_region)
   printer(bit_region)
 end
 

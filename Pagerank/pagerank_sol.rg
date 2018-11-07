@@ -113,8 +113,6 @@ task toplevel()
 
   var r_pages = region(ispace(ptr, config.num_pages), Page)
   var r_links = region(ispace(ptr, config.num_links), Link(wild, wild))
-  new(ptr(Page, r_pages), config.num_pages)
-  new(ptr(Link(r_pages), r_links), config.num_links)
   initialize_graph(r_pages, r_links, config.damp, config.num_pages, config.input)
 
   regentlib.assert(config.parallelism < config.num_links,
@@ -125,10 +123,11 @@ task toplevel()
   var p_src_pages = image(r_pages, p_links, r_links.src_page)
   var p_dst_pages = image(r_pages, p_links, r_links.dst_page)
 
-  var num_iterations = 0
+  var num_iterations = -1
   var converged = false
   var ts_start = c.legion_get_current_time_in_micros()
   while not converged do
+    if num_iterations == 0 then ts_start = c.legion_get_current_time_in_micros() end
     num_iterations += 1
     __demand(__parallel)
     for color in colors do
@@ -150,4 +149,4 @@ task toplevel()
   if config.dump_output then dump_ranks(r_pages, config.output) end
 end
 
-regentlib.start(toplevel)
+regentlib.start(toplevel, bishoplib.make_entry())

@@ -1,4 +1,4 @@
--- Copyright 2016 Stanford University
+-- Copyright 2018 Stanford University
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
 
 import "regent"
 
-
 local c = regentlib.c
 local std = terralib.includec("stdlib.h")
 
@@ -23,28 +22,27 @@ local std = terralib.includec("stdlib.h")
 -- are not needed until all the subtasks have completed, which allows the Regent runtime to
 -- issue all the subtasks before performing the sum.
 
-task hits(iterations: int64)
-     var total: int64 = 0
-     for i = 1, iterations do
-          var x: double = std.drand48()
-     	  var y: double = std.drand48()
-          if (x * x) + (y * y) <= 1.0 then
-     	     total = total + 1
-          end
-     end
-     return total
+task hits(iterations : int64)
+  var total: int64 = 0
+  for i = 1, iterations do
+    var x : double = std.drand48()
+    var y : double = std.drand48()
+    if (x * x) + (y * y) <= 1.0 then
+     	total = total + 1
+    end
+  end
+  return total
 end
 
 task main()
+  var iterations : int64 = 2500
 
-     var iterations: int64 = 2500
-     
-     var hits1 = hits(iterations)
-     var hits2 = hits(iterations)
-     var hits3 = hits(iterations)
-     var hits4 = hits(iterations)
-     var totalhits = hits1 + hits2 + hits3 + hits4
-     c.printf("The area of a unit circle is approximately: %5.4f\n", totalhits / float(iterations))
+  var hits1 = hits(iterations)
+  var hits2 = hits(iterations)
+  var hits3 = hits(iterations)
+  var hits4 = hits(iterations)
+  var totalhits = hits1 + hits2 + hits3 + hits4
+  c.printf("The area of a unit circle is approximately: %5.4f\n", totalhits / [double](iterations))
 end
 
 regentlib.start(main)

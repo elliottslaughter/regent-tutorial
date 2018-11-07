@@ -9,4 +9,4 @@
 
 source /home/groups/aaiken/eslaught/tutorial/env.sh
 
-srun regent pagerank_sol.rg -hl:prof_logfile prof_%.log -hl:prof 1 -ll:cpu 8 -i rmat20.dat -p 8
+srun regent pagerank_sol.rg -hl:prof_logfile prof_%.gz -lg:prof 1 -ll:cpu 8 -i rmat20.dat -p 8 -ll:dma 2 -e 1e-8 -ll:util 2

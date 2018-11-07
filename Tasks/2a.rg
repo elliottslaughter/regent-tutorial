@@ -12,14 +12,41 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 
--- Some Lua code to import the regent library and include interfaces for standard C functions.
 import "regent"
 local c = regentlib.c
 
--- Tasks always begin with the keyword "task".  Tasks are Regent code, written in Regent syntax.
-task main()
-  c.printf("The answer is 42\n")
+task summer(lim : int64)
+  var sum : int64 = 0
+  for i = 1, lim do
+    sum += i
+  end
+  c.printf("Summer is done!\n")
+  return sum
 end
 
--- This the (Lua) command that kicks off the top-level task.
+-- Just making the point that subtasks can also launch subtasks ...
+task subtracter(input : int64)
+  c.printf("Subtracter is done!\n")
+  return input - 3
+end
+
+task tester(sum : int64)
+  if sum >= 40 then
+    sum = subtracter(sum)
+  elseif sum <= 30 then
+    sum = 0
+  else
+	  sum += 3
+  end
+  c.printf("Tester is done!\n")
+  return sum
+end
+
+-- A main task with two subtasks
+task main()
+  var sum = summer(10)
+  sum = tester(sum)
+  c.printf("Main is done!\n")
+end
+
 regentlib.start(main)

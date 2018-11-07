@@ -44,11 +44,11 @@ local terra get_base_pointer(pr   : c.legion_physical_region_t[1],
                              rect : c.legion_rect_2d_t)
   var subrect : c.legion_rect_2d_t
   var offsets : c.legion_byte_offset_t[2]
-  var accessor = c.legion_physical_region_get_field_accessor_generic(pr[0], fid[0])
+  var accessor = c.legion_physical_region_get_field_accessor_array_2d(pr[0], fid[0])
   var base_pointer =
-    [&uint8](c.legion_accessor_generic_raw_rect_ptr_2d(
+    [&uint8](c.legion_accessor_array_2d_raw_rect_ptr(
       accessor, rect, &subrect, &(offsets[0])))
-  c.legion_accessor_generic_destroy(accessor)
+  c.legion_accessor_array_2d_destroy(accessor)
   return base_pointer
 end
 

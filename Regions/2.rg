@@ -1,4 +1,4 @@
--- Copyright 2016 Stanford University
+-- Copyright 2018 Stanford University
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- you may not use this file except in compliance with the License.
@@ -15,11 +15,10 @@
 import "regent"
 
 local c = regentlib.c
-local std = terralib.includec("stdlib.h")
 
 fspace BitField
 {
-   bit : bool;
+  bit : bool;
 }
 
 -- This example moves the initialization and printing of the region into tasks.
@@ -32,40 +31,40 @@ fspace BitField
 --
 -- Note the ttype of the region includes the types of the index and field spaces.
 --
-task clear(bit_region: region(ispace(int1d), BitField))
+task clear(bit_region : region(ispace(int1d), BitField))
 where
-    writes(bit_region.bit)
+  writes(bit_region.bit)
 do
-   for b in bit_region do
-      b.bit = false
-   end
+  for b in bit_region do
+    b.bit = false
+  end
 end
 
 --
 -- The printer task reads the bit field of the region.
 --
-task printer(bit_region: region(ispace(int1d), BitField))
+task printer(bit_region : region(ispace(int1d), BitField))
 where
-   reads(bit_region.bit)
+  reads(bit_region.bit)
 do
-   c.printf("The bits are: ")
-   var limits = bit_region.bounds
-   for i = [int](limits.lo), [int](limits.hi) + 1 do
-     if bit_region[i].bit then
-        c.printf("1 ")
-     else
-        c.printf("0 ")
-     end
-   end
-   c.printf("\n")
+  c.printf("The bits are: ")
+  var limits = bit_region.bounds
+  for i = [int](limits.lo), [int](limits.hi) + 1 do
+    if bit_region[i].bit then
+      c.printf("1 ")
+    else
+      c.printf("0 ")
+    end
+  end
+  c.printf("\n")
 end
 
 task main()
-     var size = 10
-     var bit_region = region(ispace(int1d,size), BitField)
-          
-     clear(bit_region)
-     printer(bit_region)
+  var size = 10
+  var bit_region = region(ispace(int1d, size), BitField)
+
+  clear(bit_region)
+  printer(bit_region)
 end
 
 regentlib.start(main)

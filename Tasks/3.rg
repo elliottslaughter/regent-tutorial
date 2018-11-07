@@ -1,4 +1,4 @@
--- Copyright 2016 Stanford University
+-- Copyright 2018 Stanford University
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
 -- limitations under the License.
 
 -- Run this program with a command line like:
---   ./regent.py example4.rg -ll:cpu 4
+--   ./regent.py example4.rg -ll:cpu 4 -ll:util 2
 -- On a multicore machine with at least 4 CPUs, you should see a couple of
 -- interesting things in the output:
 --   * "Task main" is probably printed first --- the main task completes before all or almost all subtasks.
@@ -22,15 +22,15 @@
 import "regent"
 local c = regentlib.c
 
-task printer(i: int64)
-     c.printf("Task %d\n", i)
+task printer(i : int64)
+  c.printf("Task %ld\n", i)
 end
 
 task main()
-     for i = 1, 100 do
-       printer(i)
-     end
-     c.printf("Task main\n")
+  for i = 1, 100 do
+    printer(i)
+  end
+  c.printf("Task main\n")
 end
 
 regentlib.start(main)

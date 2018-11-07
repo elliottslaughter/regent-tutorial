@@ -1,4 +1,4 @@
--- Copyright 2016 Stanford University
+-- Copyright 2018 Stanford University
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- you may not use this file except in compliance with the License.
@@ -14,37 +14,42 @@
 
 import "regent"
 
-
 local c = regentlib.c
-local std = terralib.includec("stdlib.h")
+local std = terralib.includec("stdlib.h") -- The C standard library.
 
--- To improve parallelism of example6.rg, subtasks now carry out many iterations of the
--- simulation independently.  The important aspect here is that the results of one subtask
--- are not needed until all the subtasks have completed, which allows the Regent runtime to
--- issue all the subtasks before performing the sum.
+-- A standard Monte Carlo simulation to estimate the area of a circle of radius 1.
+--
+-- Picture a circle of radius 1 inscribed inside a square.  Now throw N darts at the square, hitting
+-- random locations (all darts hit somewhere in the square).  If T of the darts land inside the circle,
+-- then the circle's fraction of the square's area is about T/N.  Since the area of the square is 4
+-- (a circle of radius 1 incribes inside a 2x2 square), (T/N) * 4 is our estimate of the area of the circle.
+--
+-- The simulation carries out this simulation on 1/4 of the square. Imagine both the square and the
+-- circle have their center at the origin of the (x,y) plane.  Now choose a random x in the range 0..1 and
+-- a random y in the range 0..1.  If x^2 + y^2 <= 1, then this "dart" lands inside the upper right quadrant
+-- of the circle, otherwise it lands somewhere outside the circle in the upper right quadrant of the square.
+--
 
-terra hits(iterations: int64)
-     var total: int64 = 0
-     for i = 1, iterations do
-          var x: double = std.drand48()
-     	  var y: double = std.drand48()
-          if (x * x) + (y * y) <= 1.0 then
-     	     total = total + 1
-          end
-     end
-     return total
+--
+-- TODO  Modify the code to make 2500 trials at a time in each of 4 parallel tasks.
+--
+task hit()
+  var x : double = std.drand48()
+  var y : double = std.drand48()
+  if (x * x) + (y * y) <= 1.0 then
+    return 1
+  else
+    return 0
+  end
 end
 
 task main()
-
-     var iterations: int64 = 2500
-     
-     var hits1 = hits(iterations)
-     var hits2 = hits(iterations)
-     var hits3 = hits(iterations)
-     var hits4 = hits(iterations)
-     var totalhits = hits1 + hits2 + hits3 + hits4
-     c.printf("The area of a unit circle is approximately: %5.4f\n", totalhits / float(iterations))
+  var hits : int64 = 0
+  var iterations : int64 = 10000
+  for i = 0, iterations do
+    hits += hit()
+  end
+  c.printf("The area of a unit circle is approximately: %5.4lf\n", (hits / [double](iterations)) * 4.0)
 end
 
 regentlib.start(main)

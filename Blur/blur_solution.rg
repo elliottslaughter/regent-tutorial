@@ -71,9 +71,9 @@ do
     var blur : double =       r_image[e + { -1, -1}].original +
                         2.0 * r_image[e + {  0, -1}].original +
                               r_image[e + {  1, -1}].original
-        blur         += 2.0 * r_image[e + { -1, 0}].original +
-                        4.0 * r_image[e + {  0, 0}].original +
-                        2.0 * r_image[e + {  1, 0}].original
+        blur         += 2.0 * r_image[e + { -1,  0}].original +
+                        4.0 * r_image[e + {  0,  0}].original +
+                        2.0 * r_image[e + {  1,  0}].original
         blur         +=       r_image[e + { -1,  1}].original +
                         2.0 * r_image[e + {  0,  1}].original +
                               r_image[e + {  1,  1}].original

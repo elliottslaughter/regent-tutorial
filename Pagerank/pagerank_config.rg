@@ -1,4 +1,5 @@
 import "regent"
+import "bishop"
 
 local c = regentlib.c
 
@@ -92,6 +93,21 @@ terra PageRankConfig:initialize_from_command()
     c.printf("Input file must be given!\n\n")
     print_usage_and_abort()
   end
+end
+
+mapper
+
+$CPUs = processors[isa=x86]
+
+task {
+  target : $CPUs[0];
+}
+
+task#rank_page[index=$p],
+task#calculate_squared_error[index=$p] {
+  target : $CPUs[$p[0] % $CPUs.size];
+}
+
 end
 
 return PageRankConfig

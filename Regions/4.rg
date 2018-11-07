@@ -1,4 +1,4 @@
--- Copyright 2016 Stanford University
+-- Copyright 2018 Stanford University
 --
 -- Licensed under the Apache License, Version 2.0 (the "License");
 -- you may not use this file except in compliance with the License.
@@ -15,44 +15,43 @@
 import "regent"
 
 local c = regentlib.c
-local std = terralib.includec("stdlib.h")
 
 fspace IntField
 {
-   i : int32;
+  i : int32;
 }
 
-task clear(int_region: region(ispace(int1d), IntField))
+task clear(int_region : region(ispace(int1d), IntField))
 where
-   writes(int_region.i)
+  writes(int_region.i)
 do
-   for x in int_region do
-      x.i = 0
-   end
+  for x in int_region do
+    x.i = 0
+  end
 end
 
 --
 -- The inc task both reads and writes the region.
 --
-task inc(int_region: region(ispace(int1d), IntField))
+task inc(int_region : region(ispace(int1d), IntField))
 where
-   reads writes(int_region.i)
+  reads writes(int_region.i)
 do
-  for j = 0,1000 do
-     for x in int_region do
-       x.i += 1
-     end
+  for j = 0, 1000 do
+    for x in int_region do
+      x.i += 1
+    end
   end
 end
 
 task main()
-     var size = 10000
-     var int_region = region(ispace(int1d,size), IntField)
-          
-     clear(int_region)
-     for i = 0,5 do
-       inc(int_region)
-     end
+  var size = 10000
+  var int_region = region(ispace(int1d, size), IntField)
+
+  clear(int_region)
+  for i = 0, 5 do
+    inc(int_region)
+  end
 end
 
 regentlib.start(main)
