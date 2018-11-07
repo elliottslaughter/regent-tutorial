@@ -20,7 +20,7 @@ local c = regentlib.c
 -- which we don't illustrate here.)
 fspace BitField
 {
-  bit : bool;
+  bit : bool,
 }
 
 task main()

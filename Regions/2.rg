@@ -18,7 +18,7 @@ local c = regentlib.c
 
 fspace BitField
 {
-  bit : bool;
+  bit : bool,
 }
 
 -- This example moves the initialization and printing of the region into tasks.

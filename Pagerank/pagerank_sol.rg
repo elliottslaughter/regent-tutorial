@@ -5,15 +5,15 @@ local PageRankConfig = require("pagerank_config")
 local c = regentlib.c
 
 fspace Page {
-  num_outlinks : uint32;
-  rank         : double;
-  next_rank    : double;
+  num_outlinks : uint32,
+  rank         : double,
+  next_rank    : double,
 }
 
 fspace Link(r_src_pages : region(Page),
             r_dst_pages : region(Page)) {
-  src_page : ptr(Page, r_src_pages);
-  dst_page : ptr(Page, r_dst_pages);
+  src_page : ptr(Page, r_src_pages),
+  dst_page : ptr(Page, r_dst_pages),
 }
 
 terra skip_header(f : &c.FILE)

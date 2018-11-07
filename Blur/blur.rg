@@ -12,8 +12,8 @@ local DBL_MAX = 0x1.fffffffffffffp+1023
 -- Field space for pixels
 fspace Pixel
 {
-  original : uint8;    -- Original pixel in 8-bit gray scale
-  blur     : uint8;    -- Blurred pixel
+  original : uint8,    -- Original pixel in 8-bit gray scale
+  blur     : uint8,    -- Blurred pixel
 }
 
 task factorize(parallelism : int) : int2d

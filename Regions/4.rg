@@ -18,7 +18,7 @@ local c = regentlib.c
 
 fspace IntField
 {
-  i : int32;
+  i : int32,
 }
 
 task clear(int_region : region(ispace(int1d), IntField))

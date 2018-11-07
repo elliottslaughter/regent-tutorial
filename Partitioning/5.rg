@@ -18,8 +18,8 @@ local c = regentlib.c
 
 fspace BitField
 {
-  bit1 : bool;
-  bit2 : bool;
+  bit1 : bool,
+  bit2 : bool,
 }
 
 task printer(bit_region : region(ispace(int1d), BitField))

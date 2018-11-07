@@ -18,7 +18,7 @@ local c = regentlib.c
 
 fspace BitField
 {
-  bit : bool;
+  bit : bool,
 }
 
 task clear(bit_region : region(ispace(int1d), BitField))

@@ -18,14 +18,14 @@ local c = regentlib.c
 
 fspace Node
 {
-  id : int64;
-  color: int1d;
+  id : int64,
+  color: int1d,
 }
 
 fspace Edge
 {
-  source_node : int1d;
-  dest_node   : int1d;
+  source_node : int1d,
+  dest_node   : int1d,
 }
 
 task main()

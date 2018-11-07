@@ -13,9 +13,9 @@ struct PageRankConfig
   damp           : double,
   error_bound    : double,
   max_iterations : uint32,
-  num_pages      : uint64;
-  num_links      : uint64;
-  parallelism    : uint32;
+  num_pages      : uint64,
+  num_links      : uint64,
+  parallelism    : uint32,
 }
 
 local cstring = terralib.includec("string.h")

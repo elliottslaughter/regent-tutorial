@@ -18,13 +18,13 @@ local c = regentlib.c
 
 fspace Node
 {
-  id : int64;
+  id : int64,
 }
 
 fspace Edge(r : region(ispace(int1d), Node))
 {
-  source_node : int1d;
-  dest_node   : int1d(Node, r);
+  source_node : int1d,
+  dest_node   : int1d(Node, r),
 }
 
 task main()
