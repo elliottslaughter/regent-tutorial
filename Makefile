@@ -5,4 +5,4 @@ spy:
 	legion_spy.py -de spy_*.log
 
 clean:
-	rm -f *.gz *.log *.out
+	rm -f *.gz *.log *.out *.pdf legion_prof
