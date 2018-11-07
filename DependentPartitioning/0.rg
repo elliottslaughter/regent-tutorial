@@ -41,7 +41,7 @@ task main()
   --
   for i = 0, Num_Elements do
     nodes[i].id = i
-	  nodes[i].color = i % Num_Parts
+    nodes[i].color = i % Num_Parts
   end
 
   for j = 0, Num_Elements - 1 do

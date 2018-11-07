@@ -31,7 +31,7 @@ do
 end
 
 --
--- The inc task both reads and writes the region.
+-- The inc task applies a reduction (over +) to the region.
 --
 task inc(int_region : region(ispace(int1d), IntField))
 where
