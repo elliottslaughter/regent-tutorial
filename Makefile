@@ -1,10 +1,8 @@
 prof:
-	legion_prof.py -o ~/public_html/prof prof0
+	legion_prof.py prof_*.gz
 
 spy:
-	legion_spy.py -de spy0
-	mv dataflow_main_1.pdf ~/public_html/dataflow.pdf
-	mv event_graph_main_1.pdf ~/public_html/event.pdf
+	legion_spy.py -de spy_*.log
 
 clean:
-	rm *~ prof* spy* r*sh*e* r*sh*o*
+	rm -f *.gz *.log *.out
