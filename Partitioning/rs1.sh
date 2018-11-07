@@ -1,9 +1,12 @@
-#!/bin/bash -l
-#
-#PBS -l nodes=1
-#PBS -l walltime=00:05:00
-#PBS -d .
+#!/bin/bash
+#SBATCH --partition=aaiken
+#SBATCH --tasks=1
+#SBATCH --nodes=1
+#SBATCH --cpus-per-task=1
+#SBATCH --gres=gpu:4
+#SBATCH --exclusive
+#SBATCH --time=00:05:00
 
-regent 1.rg  -logfile $PBS_O_WORKDIR/spy0 -hl:spy 1 -ll:cpu 4
+source /home/groups/aaiken/eslaught/tutorial/env.sh
 
-
+srun regent 1.rg -logfile spy_%.log -hl:spy 1 -ll:cpu 4
