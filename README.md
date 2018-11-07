@@ -61,7 +61,7 @@ make spy
 On your personal machine:
 
 ```
-scp -r SUNetID@login.sherlock.stanford.edu:tutorial/Tasks/*.pdf .
+scp SUNetID@login.sherlock.stanford.edu:tutorial/Tasks/*.pdf .
 ```
 
 Then open the PDF files.
