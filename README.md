@@ -30,6 +30,23 @@ wget -O ~/.vim/syntax/regent.vim https://raw.githubusercontent.com/StanfordLegio
 echo "au BufNewFile,BufRead *.rg set filetype=regent" >> ~/.vimrc
 ```
 
+## Running the Legion Profiler
+
+```
+cd tutorial/Tasks
+sbatch rp1.sh
+# wait for this to complete
+make prof
+```
+
+On your personal machine:
+
+```
+scp -r SUNetID@login.sherlock.stanford.edu:tutorial/Tasks/legion_prof .
+```
+
+Then open `legion_prof/index.html` in your browser.
+
 ## Links
 
   * [Legion home page](http://legion.stanford.edu)
