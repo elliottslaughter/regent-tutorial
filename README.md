@@ -13,6 +13,13 @@ squeue -u $(whoami) # wait until it shows the job has completed
 less slurm-*.out
 ```
 
+If you want to use Emacs with Regent syntax support:
+
+```
+mv -f ~/.emacs ~/.emacs.backup
+ln -s /home/groups/aaiken/eslaught/econf/quickstart.el ~/.emacs
+```
+
 ## Links
 
   * [Legion home page](http://legion.stanford.edu)
