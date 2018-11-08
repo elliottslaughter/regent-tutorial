@@ -32,7 +32,7 @@ task main()
   elseif sum <= 30 then
     sum = 0
   else
-	  sum += 3
+    sum += 3
   end
   c.printf("The answer is: %ld\n", sum)
 end
