@@ -9,4 +9,4 @@
 
 source /home/groups/aaiken/eslaught/tutorial/env.sh
 
-srun regent x1.rg -hl:prof_logfile prof_%.gz -hl:prof 1 -ll:cpu 4 -hl:serializer ascii
+srun regent x1.rg -hl:prof_logfile profx1_%.gz -hl:prof 1 -ll:cpu 4 -hl:serializer ascii

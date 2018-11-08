@@ -9,4 +9,4 @@
 
 source /home/groups/aaiken/eslaught/tutorial/env.sh
 
-srun regent 3.rg -hl:prof_logfile prof3_%.gz -lg:prof 1 -ll:cpu 4
+srun regent blur.rg -hl:prof_logfile prof_blur_%.gz -lg:prof 1 -ll:cpu 4 -i images/earth.png -p 8
