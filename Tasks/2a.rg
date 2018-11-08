@@ -36,7 +36,7 @@ task tester(sum : int64)
   elseif sum <= 30 then
     sum = 0
   else
-	  sum += 3
+    sum += 3
   end
   c.printf("Tester is done!\n")
   return sum
