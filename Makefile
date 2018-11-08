@@ -1,8 +1,8 @@
 prof:
-	legion_prof.py -f prof_*.gz
+	source /home/groups/aaiken/eslaught/tutorial/env.sh && legion_prof.py -f prof_*.gz
 
 spy:
-	legion_spy.py -de spy_*.log
+	source /home/groups/aaiken/eslaught/tutorial/env.sh && legion_spy.py -de spy_*.log
 
 clean:
 	rm -f *.gz *.log *.out *.pdf legion_prof
