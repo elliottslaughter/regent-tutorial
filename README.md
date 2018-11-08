@@ -48,15 +48,6 @@ scp -r SUNetID@login.sherlock.stanford.edu:tutorial/Tasks/legion_prof .
 
 Then open `legion_prof/index.html` in your browser.
 
-Or alternatively, if you want to avoid needing to do this repeatedly:
-
-```
-mkdir tutorial
-sshfs SUNetID@login.sherlock.stanford.edu:tutorial tutorial
-```
-
-And then open `tutorial/Tasks/legion_prof/index.html`.
-
 ## Running Legion Spy
 
 ```
@@ -73,9 +64,18 @@ On your personal machine:
 scp SUNetID@login.sherlock.stanford.edu:tutorial/Tasks/*.pdf .
 ```
 
-Or you can use SSHFS as before.
-
 Then open the PDF files.
+
+## Alternatives to SCP
+
+SSHFS:
+
+```
+mkdir tutorial
+sshfs SUNetID@login.sherlock.stanford.edu:tutorial tutorial
+```
+
+Cyberduck: https://cyberduck.io/
 
 ## Links
 
