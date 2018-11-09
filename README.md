@@ -81,7 +81,7 @@ Cyberduck: https://cyberduck.io/
 
   * [Legion home page](http://legion.stanford.edu)
   * [Regent home page](http://regent-lang.org/)
-  * [Tutorial slides](slides.pdf) (TODO)
+  * [Tutorial slides](http://sapling.stanford.edu/~eslaught/tutorial/tutorial.pdf)
   * PageRank example:
       * [pagerank\_baseline.rg](https://gitlab.com/StanfordLegion/legion/raw/master/language/examples/pagerank/pagerank_baseline.rg)
   * PageRank performance profiles:
