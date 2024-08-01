@@ -5,4 +5,4 @@
 #SBATCH --cpus-per-task=10
 #SBATCH --time=00:05:00
 
-srun regent 3.rg -ll:cpu 1
+srun regent 3.rg
