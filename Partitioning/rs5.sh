@@ -5,4 +5,4 @@
 #SBATCH --cpus-per-task=10
 #SBATCH --time=00:05:00
 
-srun regent 5.rg -logfile spy5_%.log -lg:spy 1 -ll:cpu 4
+srun regent 5.rg -ll:cpu 4 -lg:spy -logfile spy5_%.log
