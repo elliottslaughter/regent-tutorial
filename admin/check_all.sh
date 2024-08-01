@@ -13,18 +13,14 @@ for test in */r*.sh; do
     dir="$(dirname "$test")"
     base="$(basename "$test")"
     pushd $dir
-    set +e
-    sbatch --wait "$base"
-    status=$?
-    set -e
-    popd
-    if [[ status -eq 0 ]]; then
+    if sbatch --wait "$base"; then
         let passing++
         echo "[PASS] $test"
     else
         let failing++
         echo "[FAIL] $test"
     fi
+    popd
 done
 
 echo
