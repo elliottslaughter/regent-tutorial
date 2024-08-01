@@ -13,7 +13,7 @@ cd "$prefix_dir"
 if [[ ! -e legion ]]; then
     git clone git@gitlab.com:StanfordLegion/legion.git
 fi
-if [[ ! -e legion_relase ]]; then
+if [[ ! -e legion_release ]]; then
     git clone legion legion_release
 fi
 
