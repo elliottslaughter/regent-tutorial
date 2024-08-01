@@ -17,15 +17,14 @@ if [[ ! -e legion_release ]]; then
     git clone legion legion_release
 fi
 
-pushd legion/language
-# Note: must run this on a compute node
+# Note: build must run on a compute node
 LAUNCHER="srun -n 1 -N 1 -c 40 -p all --exclusive --pty"
+
+pushd legion/language
 DEBUG=1 USE_GASNET=0 USE_CUDA=0 $LAUNCHER ./scripts/setup_env.py --cmake -j20
 popd
 
 pushd legion_release/language
-# Note: must run this on a compute node
-LAUNCHER="srun -n 1 -N 1 -c 40 -p all --exclusive --pty"
 DEBUG=0 USE_GASNET=0 USE_CUDA=0 $LAUNCHER ./scripts/setup_env.py --cmake -j20
 popd
 
