@@ -14,7 +14,7 @@ if [[ ! -e legion ]]; then
     git clone git@gitlab.com:StanfordLegion/legion.git
 fi
 if [[ ! -e legion_relase ]]; then
-    cp -r legion legion_release
+    git clone legion legion_release
 fi
 
 pushd legion/language
