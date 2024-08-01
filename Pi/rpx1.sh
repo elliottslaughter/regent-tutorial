@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 #SBATCH --partition=all
 #SBATCH --tasks=1
 #SBATCH --nodes=1
