@@ -86,8 +86,6 @@ do
   return c.legion_get_current_time_in_micros()
 end
 
-terra wait_for(x : int) return 1 end
-
 task saveBlur(r_image  : region(ispace(int2d), Pixel),
               filename : int8[256])
 where
