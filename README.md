@@ -70,7 +70,11 @@ Cyberduck: https://cyberduck.io/
 ## Links
 
   * [Legion home page](http://legion.stanford.edu)
+      * [Legion Prof reference](https://legion.stanford.edu/profiling/)
+      * [Legion Spy reference](https://legion.stanford.edu/debugging/#legion-spy)
   * [Regent home page](http://regent-lang.org/)
+      * [Language reference](https://regent-lang.org/reference/)
+      * [std/format reference](https://regent-lang.org/doc/modules/std.format.html)
   * Tutorial slides (TBD)
   * PageRank example:
       * [pagerank\_baseline.rg](https://gitlab.com/StanfordLegion/legion/raw/master/language/examples/pagerank/pagerank_baseline.rg)
