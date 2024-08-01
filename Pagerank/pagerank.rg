@@ -1,5 +1,7 @@
 import "regent"
 
+local format = require("std/format")
+
 local PageRankConfig = require("pagerank_config")
 
 local c = regentlib.c
@@ -53,7 +55,7 @@ do
   end
   c.fclose(f)
   var ts_stop = c.legion_get_current_time_in_micros()
-  c.printf("Graph initialization took %.4f sec\n", (ts_stop - ts_start) * 1e-6)
+  format.println("Graph initialization took {.4} sec", (ts_stop - ts_start) * 1e-6)
 end
 
 task rank_page(r_src_pages : region(Page),
@@ -93,23 +95,23 @@ where
   reads(r_pages.rank)
 do
   var f = c.fopen(filename, "w")
-  for page in r_pages do c.fprintf(f, "%g\n", page.rank) end
+  for page in r_pages do format.fprintln(f, "{g}", page.rank) end
   c.fclose(f)
 end
 
 task toplevel()
   var config : PageRankConfig
   config:initialize_from_command()
-  c.printf("**********************************\n")
-  c.printf("* PageRank                       *\n")
-  c.printf("*                                *\n")
-  c.printf("* Number of Pages  : %11lu *\n",  config.num_pages)
-  c.printf("* Number of Links  : %11lu *\n",  config.num_links)
-  c.printf("* Damping Factor   : %11.4f *\n", config.damp)
-  c.printf("* Error Bound      : %11g *\n",   config.error_bound)
-  c.printf("* Max # Iterations : %11d *\n",   config.max_iterations)
-  c.printf("* # Parallel Tasks : %11u *\n",   config.parallelism)
-  c.printf("**********************************\n")
+  format.println("**********************************")
+  format.println("* PageRank                       *")
+  format.println("*                                *")
+  format.println("* Number of Pages  : {11} *",  config.num_pages)
+  format.println("* Number of Links  : {11} *",  config.num_links)
+  format.println("* Damping Factor   : {11.4} *", config.damp)
+  format.println("* Error Bound      : {11g} *",   config.error_bound)
+  format.println("* Max # Iterations : {11} *",   config.max_iterations)
+  format.println("* # Parallel Tasks : {11} *",   config.parallelism)
+  format.println("**********************************")
 
   var r_pages = region(ispace(ptr, config.num_pages), Page)
   var r_links = region(ispace(ptr, config.num_links), Link(wild, wild))
@@ -146,7 +148,7 @@ task toplevel()
                 num_iterations >= config.max_iterations
   end
   var ts_stop = c.legion_get_current_time_in_micros()
-  c.printf("PageRank converged after %d iterations in %.4f sec\n",
+  format.println("PageRank converged after {} iterations in {.4} sec",
     num_iterations, (ts_stop - ts_start) * 1e-6)
 
   if config.dump_output then dump_ranks(r_pages, config.output) end
