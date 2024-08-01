@@ -14,7 +14,7 @@
 
 import "regent"
 
-local c = regentlib.c
+local format = require("std/format")
 
 fspace Node
 {
@@ -47,11 +47,11 @@ task main()
   var edge_partition = partition(equal, edges, colors)
 
   for color in edge_partition.colors do
-    c.printf("Edge subregion %ld: ", color)
+    format.print("Edge subregion {}: ", color)
     for e in edge_partition[color] do
-      c.printf("(%2ld, %2ld) ", nodes[e.source_node].id, e.dest_node.id)
+      format.print("({2}, {2}) ", nodes[e.source_node].id, e.dest_node.id)
     end
-    c.printf("\n")
+    format.println("")
   end
 
   var node_partition_upper = image(nodes, edge_partition, edges.dest_node)
@@ -68,19 +68,19 @@ task main()
   var private_edges_partition = private_edges_partition_upper & private_edges_partition_lower
 
   for color in private_nodes_partition.colors do
-    c.printf("Private nodes subregion %ld: ", color)
+    format.print("Private nodes subregion {}: ", color)
     for n in private_nodes_partition[color] do
-      c.printf("%2ld ", n.id)
+      format.print("{2} ", n.id)
     end
-    c.printf("\n")
+    format.println("")
   end
 
   for color in private_edges_partition.colors do
-    c.printf("Private edges subregion %ld: ", color)
+    format.print("Private edges subregion {}: ", color)
     for e in private_edges_partition[color] do
-      c.printf("(%2ld,%2ld) ", e.source_node.id, e.dest_node.id)
+      format.print("({2},{2}) ", e.source_node.id, e.dest_node.id)
     end
-    c.printf("\n")
+    format.println("")
   end
 end
 

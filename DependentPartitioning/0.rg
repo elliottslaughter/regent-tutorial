@@ -14,7 +14,7 @@
 
 import "regent"
 
-local c = regentlib.c
+local format = require("std/format")
 
 fspace Node
 {
@@ -56,11 +56,11 @@ task main()
   var node_partition = partition(nodes.color, colors)
 
   for color in node_partition.colors do
-    c.printf("Node subregion %ld: ", color)
+    format.print("Node subregion {}: ", color)
     for n in node_partition[color] do
-      c.printf("%2ld ", n.id)
+      format.print("{2} ", n.id)
     end
-    c.printf("\n")
+    format.println("")
   end
 end
 
