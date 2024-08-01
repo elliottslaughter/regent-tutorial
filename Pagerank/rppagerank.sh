@@ -1,12 +1,8 @@
 #!/bin/bash
-#SBATCH --partition=aaiken
+#SBATCH --partition=all
 #SBATCH --tasks=1
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=10
-#SBATCH --gres=gpu:4
-#SBATCH --exclusive
 #SBATCH --time=00:05:00
 
-source /home/groups/aaiken/eslaught/tutorial/env.sh
-
-srun regent pagerank.rg -hl:prof_logfile prof_pagerank_%.gz -lg:prof 1 -ll:cpu 8 -i rmat20.dat -p 8 -ll:dma 2 -e 1e-8 -ll:util 2
+srun regent pagerank.rg -lg:prof 1 -lg:prof_logfile prof_pagerank_%.gz -ll:cpu 8 -i rmat20.dat -p 8 -ll:dma 2 -e 1e-8 -ll:util 2

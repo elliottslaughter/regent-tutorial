@@ -1,12 +1,8 @@
 #!/bin/bash
-#SBATCH --partition=aaiken
+#SBATCH --partition=all
 #SBATCH --tasks=1
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=10
-#SBATCH --gres=gpu:4
-#SBATCH --exclusive
 #SBATCH --time=00:05:00
 
-source /home/groups/aaiken/eslaught/tutorial/env.sh
-
-srun regent x2.rg -hl:prof_logfile profx2_%.gz -lg:prof 1 -ll:cpu 4
+srun regent x2.rg -lg:prof 1 -lg:prof_logfile profx2_%.gz -ll:cpu 4
