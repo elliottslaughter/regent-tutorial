@@ -10,8 +10,11 @@ passing=0
 failing=0
 shopt -s globstar
 for test in */r*.sh; do
+    set +e
     sbatch --wait "$test"
-    if [[ $? == 0 ]]; then
+    status=$?
+    set -e
+    if [[ status -eq 0 ]]; then
         let passing++
         echo "[PASS] $test"
     else
