@@ -20,4 +20,4 @@ DEBUG=1 USE_GASNET=0 USE_CUDA=0 $LAUNCHER ./scripts/setup_env.py -j20
 popd
 
 mkdir -p bin
-ln -sf legion/language/regent.py bin/regent
+ln -sf ../legion/language/regent.py bin/regent
