@@ -16,7 +16,7 @@ fi
 pushd legion/language
 # Note: must run this on a compute node
 LAUNCHER="srun -n 1 -N 1 -c 40 -p all --exclusive --pty"
-DEBUG=1 USE_GASNET=0 USE_CUDA=0 $LAUNCHER ./scripts/setup_env.py -j20
+DEBUG=1 USE_GASNET=0 USE_CUDA=0 $LAUNCHER ./scripts/setup_env.py --cmake -j20
 popd
 
 mkdir -p bin
