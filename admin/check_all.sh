@@ -14,10 +14,10 @@ for test in */r*.sh; do
     base="$(basename "$test")"
     pushd $dir
     if sbatch --wait "$base"; then
-        let passing++
+        passing=$(( passing + 1 ))
         echo "[PASS] $test"
     else
-        let failing++
+        failing=$(( failing + 1 ))
         echo "[FAIL] $test"
     fi
     popd
