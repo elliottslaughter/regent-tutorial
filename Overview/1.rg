@@ -12,13 +12,13 @@
 -- See the License for the specific language governing permissions and
 -- limitations under the License.
 
--- Some Lua code to import the regent library and include interfaces for standard C functions.
+-- Some Lua code to import the Regent language and std/format library.
 import "regent"
-local c = regentlib.c
+local format = require("std/format")
 
 -- Tasks always begin with the keyword "task".  Tasks are Regent code, written in Regent syntax.
 task main()
-  c.printf("The answer is 42\n")
+  format.println("The answer is 42")
 end
 
 -- This the (Lua) command that kicks off the top-level task.

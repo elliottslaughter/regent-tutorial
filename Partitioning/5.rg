@@ -14,6 +14,7 @@
 
 import "regent"
 
+local format = require("std/format")
 local c = regentlib.c
 
 fspace BitField
@@ -26,24 +27,26 @@ task printer(bit_region : region(ispace(int1d), BitField))
 where
   reads(bit_region.bit1), reads(bit_region.bit2)
 do
-  c.printf("The bits are: \nbit1: ")
+  format.println("The bits are: ")
+  format.print("bit1: ")
   var limits = bit_region.bounds
   for i = [int](limits.lo), [int](limits.hi) + 1 do
     if bit_region[i].bit1 then
-      c.printf("1 ")
+      format.print("1 ")
     else
-      c.printf("0 ")
+      format.print("0 ")
     end
   end
-  c.printf("\nbit2: ")
+  format.println("")
+  format.print("bit2: ")
   for i = [int](limits.lo), [int](limits.hi) + 1 do
     if bit_region[i].bit2 then
-      c.printf("1 ")
+      format.print("1 ")
     else
-      c.printf("0 ")
+      format.print("0 ")
     end
   end
-  c.printf("\n")
+  format.println("")
 end
 
 task clear(bit_region : region(ispace(int1d), BitField))

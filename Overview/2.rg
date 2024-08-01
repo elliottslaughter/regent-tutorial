@@ -13,7 +13,7 @@
 -- limitations under the License.
 
 import "regent"
-local c = regentlib.c
+local format = require("std/format")
 
 -- This example illustrates some basic Regent syntax.
 --   * The declaration of a local variable "sum".  Note that Regent
@@ -39,7 +39,7 @@ task main()
   else
     sum += 3
   end
-  c.printf("The answer is %ld\n", sum)
+  format.println("The answer is {}", sum)
 end
 
 regentlib.start(main)
