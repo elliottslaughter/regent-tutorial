@@ -10,10 +10,14 @@ passing=0
 failing=0
 shopt -s globstar
 for test in */r*.sh; do
+    dir="$(dirname "$test")"
+    base="$(basename "$test")"
+    pushd $dir
     set +e
-    sbatch --wait "$test"
+    sbatch --wait "$base"
     status=$?
     set -e
+    popd
     if [[ status -eq 0 ]]; then
         let passing++
         echo "[PASS] $test"
