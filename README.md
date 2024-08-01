@@ -2,11 +2,16 @@
 
 ## Setup Instructions
 
-Basic sanity check that everything works:
+Log in and clone the repo:
 
 ```bash
 ssh USERNAME@sapling.stanford.edu
 git clone https://github.com/elliottslaughter/regent-tutorial.git tutorial
+```
+
+Basic sanity check that everything works:
+
+```bash
 cd tutorial
 source env.sh
 cd Overview
