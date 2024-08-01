@@ -14,6 +14,7 @@
 
 import "regent"
 
+local format = require("std/format")
 local c = regentlib.c
 
 -- To improve parallelism of example6.rg, subtasks now carry out many iterations of the
@@ -41,7 +42,7 @@ task main()
   var hits3 = hits(iterations)
   var hits4 = hits(iterations)
   var totalhits = hits1 + hits2 + hits3 + hits4
-  c.printf("The area of a unit circle is approximately: %5.4f\n", totalhits / [double](iterations))
+  format.println("The area of a unit circle is approximately: {5.4}", totalhits / [double](iterations))
 end
 
 regentlib.start(main)
