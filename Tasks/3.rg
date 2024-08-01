@@ -20,17 +20,17 @@
 --   * The subtasks do not execute in the order they are issued.
 --
 import "regent"
-local c = regentlib.c
+local format = require("std/format")
 
 task printer(i : int64)
-  c.printf("Task %ld\n", i)
+  format.println("Task {}", i)
 end
 
 task main()
   for i = 1, 100 do
     printer(i)
   end
-  c.printf("Task main\n")
+  format.println("Task main")
 end
 
 regentlib.start(main)

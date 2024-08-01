@@ -13,7 +13,7 @@
 -- limitations under the License.
 
 import "regent"
-local c = regentlib.c
+local format = require("std/format")
 
 -- An example of a subtask: summer is called from within main.
 task summer(lim : int64)
@@ -21,7 +21,7 @@ task summer(lim : int64)
   for i = 1, lim do
     sum += i
   end
-  c.printf("Summer is done!\n")
+  format.println("Summer is done!")
   return sum
 end
 
@@ -34,7 +34,7 @@ task main()
   else
     sum += 3
   end
-  c.printf("The answer is: %ld\n", sum)
+  format.println("The answer is: {}", sum)
 end
 
 regentlib.start(main)

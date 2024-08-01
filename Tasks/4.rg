@@ -23,10 +23,10 @@
 --     similarly for negative subtasks.
 --
 import "regent"
-local c = regentlib.c
+local format = require("std/format")
 
 task printer(i : int64)
-  c.printf("Task %ld\n", i)
+  format.println("Task {}", i)
   return i
 end
 
@@ -36,7 +36,7 @@ task main()
     j = printer(i)  -- positive subtask
     printer(-j)     -- negative subtask
   end
-  c.printf("Task main\n")
+  format.println("Task main")
 end
 
 regentlib.start(main)

@@ -14,6 +14,7 @@
 
 import "regent"
 
+local format = require("std/format")
 local c = regentlib.c
 
 -- A standard Monte Carlo simulation to estimate the area of a circle of radius 1.
@@ -44,7 +45,7 @@ task main()
   for i = 0, iterations do
     hits += hit()
   end
-  c.printf("The area of a unit circle is approximately: %5.4lf\n", (hits / [double](iterations)) * 4.0)
+  format.println("The area of a unit circle is approximately: {5.4}", (hits / [double](iterations)) * 4.0)
 end
 
 regentlib.start(main)

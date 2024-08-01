@@ -14,7 +14,7 @@
 
 import "regent"
 
-local c = regentlib.c
+local format = require("std/format")
 
 fspace IntField
 {

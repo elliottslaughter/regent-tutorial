@@ -13,20 +13,20 @@
 -- limitations under the License.
 
 import "regent"
-local c = regentlib.c
+local format = require("std/format")
 
 task summer(lim : int64)
   var sum : int64 = 0
   for i = 1, lim do
     sum += i
   end
-  c.printf("Summer is done!\n")
+  format.println("Summer is done!")
   return sum
 end
 
 -- Just making the point that subtasks can also launch subtasks ...
 task subtracter(input : int64)
-  c.printf("Subtracter is done!\n")
+  format.println("Subtracter is done!")
   return input - 3
 end
 
@@ -38,7 +38,7 @@ task tester(sum : int64)
   else
     sum += 3
   end
-  c.printf("Tester is done!\n")
+  format.print("Tester is done!\n")
   return sum
 end
 
@@ -46,7 +46,7 @@ end
 task main()
   var sum = summer(10)
   sum = tester(sum)
-  c.printf("The answer is: %ld\n",sum)
+  format.println("The answer is: {}",sum)
 end
 
 regentlib.start(main)

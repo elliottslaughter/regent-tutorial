@@ -14,7 +14,7 @@
 
 import "regent"
 
-local c = regentlib.c
+local format = require("std/format")
 
 -- A field space is a list of fields, much like a struct in C (and similar to structs in Regent,
 -- which we don't illustrate here.)
@@ -46,7 +46,7 @@ task main()
     b.bit = false
   end
 
-  c.printf("The bits are: ")
+  format.print("The bits are: ")
 
   -- Here is another way to iterate over regions.  Regions with structured index spaces have a field
   --  "bounds" with an upper and lower limit.  Bounds is a struct
@@ -56,12 +56,12 @@ task main()
   var limits = bit_region.bounds
   for i = [int](limits.lo), [int](limits.hi) + 1 do
     if bit_region[i].bit then
-      c.printf("1 ")
+      format.print("1 ")
     else
-      c.printf("0 ")
+      format.print("0 ")
     end
   end
-  c.printf("\n")
+  format.println("")
 end
 
 regentlib.start(main)
