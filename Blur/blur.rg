@@ -1,5 +1,7 @@
 import "regent"
 
+local format = require("std/format")
+
 -- Helper modules to handle PNG files and command line arguments
 local png        = require("png_util")
 local BlurConfig = require("blur_config")
@@ -64,11 +66,11 @@ end
 --
 __demand(__cuda)
 task blur(r_image    : region(ispace(int2d), Pixel),
-          r_interior : region(ispace(int2d), Pixel)) : double
+          r_interior : region(ispace(int2d), Pixel))
 where
   reads(r_image.original), writes(r_interior.blur)
 do
-  var ts_start = [double](c.legion_get_current_time_in_micros())
+  var ts_start = c.legion_get_current_time_in_micros()
 
   -- TODO: write a loop that does the convolution between the interior image
   --       and the 3x3 Gaussian filter
@@ -77,17 +79,17 @@ do
 end
 
 __demand(__cuda)
-task block_task(r_image : region(ispace(int2d), Pixel)) : double
+task block_task(r_image : region(ispace(int2d), Pixel))
 where
   reads writes(r_image)
 do
-  return [double](c.legion_get_current_time_in_micros())
+  return c.legion_get_current_time_in_micros()
 end
 
 terra wait_for(x : int) return 1 end
 
 task saveBlur(r_image  : region(ispace(int2d), Pixel),
-                filename : int8[256])
+              filename : int8[256])
 where
   reads(r_image.blur)
 do
@@ -135,22 +137,18 @@ task toplevel()
   var p_halo = image(r_image, p_private, calculate_halo_size)
 
   initialize(r_image, config.filename_image)
-  var token = 0
-  for color in p_private_colors do
-    token += block_task(p_private[color])
-  end
-  wait_for(token)
+  __fence(__execution, __block)
 
   var ts_start = DBL_MAX
   for color in p_private_colors do
     ts_start min= blur(p_halo[color], p_private[color])
   end
 
-  var ts_end = 0.0
+  var ts_end : uint64 = 0
   for color in p_private_colors do
     ts_end max= block_task(p_private[color])
   end
-  c.printf("Total time: %.3f ms.\n", (ts_end - ts_start) * 1e-3)
+  format.println("Total time: {.3} ms.", [double](ts_end - ts_start) * 1e-3)
 
   saveBlur(r_image, config.filename_blur)
 end
