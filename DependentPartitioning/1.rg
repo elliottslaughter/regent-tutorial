@@ -23,7 +23,7 @@ fspace Node
 
 fspace Edge(r : region(ispace(int1d), Node))
 {
-  source_node : int1d,
+  source_node : int1d(Node, r),
   dest_node   : int1d(Node, r),
 }
 
@@ -39,8 +39,8 @@ task main()
   end
 
   for j = 0, Num_Elements - 1 do
-    edges[j].source_node = [int1d](j)
-    edges[j].dest_node   = dynamic_cast(int1d(Node, nodes), [int1d](j + 1))
+    edges[j].source_node = dynamic_cast(int1d(Node, nodes), j)
+    edges[j].dest_node   = dynamic_cast(int1d(Node, nodes), j + 1)
   end
 
   --
@@ -53,7 +53,7 @@ task main()
   for color in edge_partition.colors do
     format.print("Edge subregion {}: ", color)
     for e in edge_partition[color] do
-      format.print("({2}, {2}) ", nodes[e.source_node].id, e.dest_node.id)
+      format.print("({2}, {2}) ", e.source_node.id, e.dest_node.id)
     end
     format.println("")
   end

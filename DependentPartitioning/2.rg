@@ -39,8 +39,8 @@ task main()
   end
 
   for j = 0, Num_Elements - 1 do
-    edges[j].source_node = dynamic_cast(int1d(Node, nodes), [int1d](j))
-    edges[j].dest_node   = dynamic_cast(int1d(Node, nodes), [int1d](j + 1))
+    edges[j].source_node = dynamic_cast(int1d(Node, nodes), j)
+    edges[j].dest_node   = dynamic_cast(int1d(Node, nodes), j + 1)
   end
 
   --

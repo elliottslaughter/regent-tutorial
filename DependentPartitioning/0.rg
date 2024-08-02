@@ -45,8 +45,8 @@ task main()
   end
 
   for j = 0, Num_Elements - 1 do
-    edges[j].source_node = [int1d](j)
-    edges[j].dest_node   = [int1d](j + 1)
+    edges[j].source_node = j
+    edges[j].dest_node   = j + 1
   end
 
   --
