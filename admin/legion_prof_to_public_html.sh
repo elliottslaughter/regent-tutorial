@@ -8,6 +8,7 @@ legion_prof="$root_dir/legion_prof"
 
 mkdir -p "$HOME/public_html"
 output_dir="$(mktemp -d -p "$HOME/public_html")"
+chmod og+rx "$output_dir"
 
 $legion_prof archive "$@" -o "$output_dir/legion_prof"
 
