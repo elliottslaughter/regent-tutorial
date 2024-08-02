@@ -31,3 +31,6 @@ popd
 mkdir -p bin
 ln -sf ../legion/language/regent.py bin/regent
 ln -sf ../legion_release/language/regent.py bin/regent_release
+ln -sf "$root_dir/admin/legion_prof_to_public_html.sh" bin/legion_prof_to_public_html
+
+cargo install --all-features --locked --path ../legion/tools/legion_prof_rs --root .
