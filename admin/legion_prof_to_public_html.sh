@@ -2,7 +2,7 @@
 
 set -e
 
-root_dir="$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")"
+root_dir="$(dirname "${BASH_SOURCE[0]}")"
 
 legion_prof="$root_dir/legion_prof"
 
