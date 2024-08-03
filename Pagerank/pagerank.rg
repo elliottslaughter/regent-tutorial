@@ -95,7 +95,7 @@ where
   reads(r_pages.rank)
 do
   var f = c.fopen(filename, "w")
-  for page in r_pages do format.fprintln(f, "{g}", page.rank) end
+  for page in r_pages do format.fprintln(f, "{e}", page.rank) end
   c.fclose(f)
 end
 
@@ -108,7 +108,7 @@ task toplevel()
   format.println("* Number of Pages  : {11} *",  config.num_pages)
   format.println("* Number of Links  : {11} *",  config.num_links)
   format.println("* Damping Factor   : {11.4} *", config.damp)
-  format.println("* Error Bound      : {11g} *",   config.error_bound)
+  format.println("* Error Bound      : {11e} *",   config.error_bound)
   format.println("* Max # Iterations : {11} *",   config.max_iterations)
   format.println("* # Parallel Tasks : {11} *",   config.parallelism)
   format.println("**********************************")
