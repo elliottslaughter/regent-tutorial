@@ -134,12 +134,12 @@ task toplevel()
   while not converged do
     if num_iterations == 0 then ts_start = c.legion_get_current_time_in_micros() end
     num_iterations += 1
-    __demand(__parallel)
+    __demand(__index_launch)
     for color in colors do
       rank_page(p_src_pages[color], p_dst_pages[color], p_links[color], config.damp)
     end
     var sum_error = 0.0
-    __demand(__parallel)
+    __demand(__index_launch)
     for color in colors do
       sum_error +=
         calculate_squared_error(p_dst_pages[color], config.damp, config.num_pages)
