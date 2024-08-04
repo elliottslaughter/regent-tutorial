@@ -79,7 +79,7 @@ do
 end
 
 --
--- Declare a control replicated task with `__demand(__replicate)`. The
+-- Declare a control replicated task with `__demand(__replicable)`. The
 -- compiler will throw an error if the optimization cannot be proven to be
 -- safe. It is a defensive programming practice to annotate tasks with the
 -- optimizations you think will apply, so that the compiler can check your
